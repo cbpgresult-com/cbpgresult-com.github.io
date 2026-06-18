@@ -47,21 +47,14 @@ linear-gradient(
 #2563eb,
 #06b6d4
 );
-background-size:400% 400%;
-animation:bgMove 12s ease infinite;
-}
 
-@keyframes bgMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
 }
 
 .portal-box{
 width:100%;
 max-width:520px;
 background:rgba(255,255,255,.12);
-backdrop-filter:blur(18px);
+backdrop-filter:none;
 padding:25px;
 border-radius:25px;
 box-shadow:0 15px 50px rgba(0,0,0,.25);
@@ -649,10 +642,10 @@ display:none;
 width:96%;
 max-width:1400px;
 background:rgba(255,255,255,.12);
-backdrop-filter:blur(18px);
+backdrop-filter:none;
 padding:20px 40px;
 border-radius:25px;
-box-shadow:0 15px 50px rgba(0,0,0,.25);
+box-shadow:none;
 border:1px solid rgba(255,255,255,.15);
 }
 /* Inputs */
@@ -757,7 +750,7 @@ select{
     height:48px !important;
     font-size:16px !important;
 }
-
+}
 @media (min-width:1024px){
 
 select{
@@ -769,6 +762,64 @@ option{
     font-size:18px;
 }
 
+}
+#downloadLoader{
+display:none;
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+z-index:999999;
+background:none !important;
+width:100%;
+pointer-events:none;
+}
+
+.download-card{
+width:450px;
+max-width:95vw;
+background:#fff;
+border-radius:16px;
+padding:14px 16px;
+box-shadow:0 10px 30px rgba(0,0,0,.18);
+pointer-events:auto;
+}
+
+.download-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:14px;
+font-weight:600;
+margin-bottom:10px;
+color:#111827;
+}
+
+.progress-bar{
+width:100%;
+height:8px;
+background:#e5e7eb;
+border-radius:999px;
+overflow:hidden;
+}
+
+#progressFill{
+width:0%;
+height:100%;
+background:linear-gradient(
+90deg,
+#2563eb,
+#06b6d4,
+#22c55e
+);
+border-radius:999px;
+transition:width .25s ease;
+}
+
+#downloadText{
+margin-top:8px;
+font-size:12px;
+color:#6b7280;
 }
 </style>
 
@@ -809,13 +860,11 @@ Affiliated - Maharaja SuhelDev State University, Azamgarh, Uttar Pradesh
 <h2>Affiliated with Maharaja Suhel Dev University, Azamgarh, Uttar Pradesh</h2>
 
 <p>
-Check UG, PG,
-Professional Results - affiliated with Maharaja Suhel Dev
-State University, Azamgarh.
+Affiliated with Maharaja SuhelDev University, Azamgarh, Uttar Pradesh.
 </p>
 
 <p>
-CBPG College - Check UG, PG, Professional & Back Paper Results.
+Affiliated with Maharaja SuhelDev University, Azamgarh, Uttar Pradesh
 </p>
 </div>
 <div class="input-group">
@@ -949,54 +998,21 @@ onclick="openFullResult()">
 
 </div>
 
-<div id="downloadLoader" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.55);
-z-index:999999;
-justify-content:center;
-align-items:center;
-">
+<div id="downloadLoader" class="top-download">
 
-<div style="
-width:170px;
-padding:18px;
-background:#fff;
-border-radius:18px;
-text-align:center;
-">
-<div id="downloadIcon" style="
-width:55px;
-height:55px;
-margin:auto;
-border:5px solid #e5e7eb;
-border-top:5px solid #2563eb;
-border-radius:50%;
-animation:spin 1s linear infinite;
-"></div>
+<div class="download-card">
 
-
-
-<div id="downloadPercent"
-style="
-margin-top:12px;
-font-size:22px;
-font-weight:700;
-color:#2563eb;
-">
-0%
+<div class="download-row">
+<span>📥 Downloading Result PDF</span>
+<span id="downloadPercent">0%</span>
 </div>
 
-<div id="downloadText" style="
-font-size:14px;
-font-weight:600;
-margin-top:3px;
-">
-Downloading...
+<div class="progress-bar">
+<div id="progressFill"></div>
+</div>
+
+<div id="downloadText">
+Preparing file...
 </div>
 
 </div>
@@ -1072,12 +1088,22 @@ let percent = 0;
 
 let timer = setInterval(function(){
 
-if(percent < 90){
+if(percent < 95){
 
 percent += 5;
 
 document.getElementById("downloadPercent").innerText =
 percent + "%";
+
+document.getElementById("progressFill").style.width =
+percent + "%";
+
+if(percent > 80){
+
+document.getElementById("downloadText").innerText =
+"Processing PDF...";
+
+}
 
 }
 
@@ -1095,19 +1121,11 @@ clearInterval(timer);
 
 document.getElementById("downloadPercent").innerText =
 "100%";
-document.getElementById("downloadIcon").style.border="none";
-document.getElementById("downloadIcon").style.animation="none";
-document.getElementById("downloadIcon").style.width="60px";
-document.getElementById("downloadIcon").style.height="60px";
-document.getElementById("downloadIcon").style.display="flex";
-document.getElementById("downloadIcon").style.alignItems="center";
-document.getElementById("downloadIcon").style.justifyContent="center";
-document.getElementById("downloadIcon").style.fontSize="42px";
-document.getElementById("downloadIcon").style.color="#22c55e";
-document.getElementById("downloadIcon").innerHTML="✓";
+document.getElementById("progressFill").style.width = "100%";
 
 document.getElementById("downloadText").innerText =
-"Download Completed";
+"Download Completed ✓";
+
 let btn = document.getElementById("actionBtn");
 
 btn.innerHTML = "✅ Open PDF";
@@ -1176,17 +1194,13 @@ setTimeout(function(){
 document.getElementById("downloadLoader").style.display="none";
 
 document.getElementById("downloadPercent").innerText="0%";
-document.getElementById("downloadText").innerText="Downloading...";
 
-document.getElementById("downloadIcon").innerHTML="";
-document.getElementById("downloadIcon").style="";
-document.getElementById("downloadIcon").setAttribute(
-"style",
-"width:55px;height:55px;margin:auto;border:5px solid #e5e7eb;border-top:5px solid #2563eb;border-radius:50%;animation:spin 1s linear infinite;"
-);
+document.getElementById("progressFill").style.width="0%";
+
+document.getElementById("downloadText").innerText =
+"Preparing file...";
 
 },500);
-
 }catch(e){
 
 clearInterval(timer);
@@ -1356,55 +1370,7 @@ document.getElementById("pdfLoader").style.display = "none";
 };
 
 frame.src = resultLink;
-document.addEventListener("click",function(e){
 
-if(e.target.innerText==="Open"){
-
-document.getElementById("miniLoader").style.display="block";
-
-fetch(resultLink)
-.then(r=>r.blob())
-.then(blob=>{
-
-const url=URL.createObjectURL(blob);
-
-const a=document.createElement("a");
-
-a.href=url;
-a.download=resultLink.split('/').pop();
-
-document.body.appendChild(a);
-
-a.click();
-
-a.remove();
-
-document.getElementById("miniIcon").style.border="none";
-document.getElementById("miniIcon").style.animation="none";
-document.getElementById("miniIcon").style.display="flex";
-document.getElementById("miniIcon").style.alignItems="center";
-document.getElementById("miniIcon").style.justifyContent="center";
-document.getElementById("miniIcon").style.fontSize="28px";
-document.getElementById("miniIcon").style.color="#22c55e";
-document.getElementById("miniIcon").innerHTML="✓";
-
-setTimeout(()=>{
-
-document.getElementById("miniLoader").style.display="none";
-
-document.getElementById("miniIcon").innerHTML="";
-document.getElementById("miniIcon").setAttribute(
-"style",
-"width:35px;height:35px;border:4px solid #e5e7eb;border-top:4px solid #2563eb;border-radius:50%;animation:spin 1s linear infinite;"
-);
-
-},1500);
-
-});
-
-}
-
-});
 }else{
 
 error.innerHTML =
