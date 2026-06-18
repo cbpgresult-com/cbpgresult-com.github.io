@@ -1022,6 +1022,8 @@ Preparing file...
 
 <script>
 
+const SHOW_PG_PROFESSIONAL_2026 = true;
+
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwcuRt0wI_st92B8kKVYjYbc_K80_ZU8QAAlFQ32-NpBUwYFnYHtWRWndosFzQxUc5U/exec";
 
@@ -1576,7 +1578,17 @@ if(year === "2024"){
   <option value="PROFESSIONAL">PROFESSIONAL</option>
   `;
 
-}else{
+}
+else if(year === "2026" && !SHOW_PG_PROFESSIONAL_2026){
+
+  examType.innerHTML = `
+  <option value="">Choose Exam Type</option>
+  <option value="BACKPAPER">BACK_PAPER</option>
+  <option value="UG">UnderGraduate (UG)</option>
+  `;
+
+}
+else{
 
   examType.innerHTML = `
   <option value="">Choose Exam Type</option>
