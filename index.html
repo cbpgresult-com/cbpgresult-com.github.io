@@ -7,7 +7,7 @@
 <title>CBPG Result - Check Semester Examination Result</title>
 
 <meta name="description"
-content="CBPG RESULT PORTAL. Affiliated - Maharaja SuhelDev State University, Azamgarh, Uttar Pradesh. Check UG PG Results. CBPG College Tarwa Azamgarh">
+content="CBPG RESULT PORTAL. Affiliated with Maharaja SuhelDev State University, Azamgarh, Uttar Pradesh. Check Semester Examination Results Online.">
 
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 
@@ -998,7 +998,7 @@ onclick="openFullResult()">
 
 </div>
 
-<div id="downloadLoader" class="top-download">
+<div id="downloadLoader" class="top-download" aria-hidden="true">
 
 <div class="download-card">
 
@@ -1072,8 +1072,10 @@ resultLink = "";
 
 let btn = document.getElementById("actionBtn");
 
-btn.innerHTML = "📄 Download Result";
-btn.style.display = "block";
+btn.innerHTML = "";
+btn.style.display = "none";
+
+
 btn.style.background = "";
 
 btn.onclick = openFullResult;
@@ -1351,7 +1353,7 @@ if(data.status === "found"){
 let btn = document.getElementById("actionBtn");
 
 btn.innerHTML = "📄 Download Result";
-
+btn.style.display = "block";
 btn.style.background = "";
 
 btn.onclick = openFullResult;
