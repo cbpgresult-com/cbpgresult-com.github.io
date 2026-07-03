@@ -1493,11 +1493,7 @@ if (!record) {
 
 }
 
-console.log("Supabase Record =", data);
- console.log("Course =", record.course);
-console.log("Exam =", record.exam_type);
-console.log("Semester =", sem);
-console.log("Link =", record["sem"+sem]);
+
   // =========================
 // Father / Mother / Course Match
 // =========================
@@ -1554,47 +1550,19 @@ else{
     let link2 = record["back_sem" + sem];
 
     // Pehle Back In Back check
-    if(link1){
+   if (link1) {
 
-        try{
-
-            const r1 = await fetch(link1,{
-                method:"HEAD"
-            });
-
-            if(r1.ok){
-
-                link = link1;
-
-            }
-
-        }catch(e){}
-
-    }
-
-    // Agar Back2 valid nahi hai
-    if(!link && link2){
-
-        try{
-
-            const r2 = await fetch(link2,{
-                method:"HEAD"
-            });
-
-            if(r2.ok){
-
-                link = link2;
-
-            }
-
-        }catch(e){}
-
-    }
-
-
-    }
+    link = link1;
 
 }
+else if (link2) {
+
+    link = link2;
+
+}
+}
+}
+  console.log("Final Link =", link);
 if(!link){
 
     document.getElementById("loading").style.display = "none";
@@ -1875,6 +1843,12 @@ document.addEventListener("keydown", function(e){
     }
 
 });
+  if(location.hostname !== "localhost"){
+    console.log = function(){};
+    console.warn = function(){};
+    console.error = function(){};
+    console.info = function(){};
+}
 </script>
 
 </body>
