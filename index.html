@@ -945,6 +945,9 @@ animation:dots .8s infinite linear;
  "url":"https://cbpgresult-com.github.io/"
 }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
@@ -1149,6 +1152,15 @@ const SHOW_PROFESSIONAL_2026 = true
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwcuRt0wI_st92B8kKVYjYbc_K80_ZU8QAAlFQ32-NpBUwYFnYHtWRWndosFzQxUc5U/exec";
 
+const SUPABASE_URL = "https://tbwxeokivddxumxvyfxc.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_CX5vJzr0Tfj_1Fxt6_DF1g_vlbcO8ub";
+
+window.db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
 let resultLink = "";
 const YEAR_WISE_SEMESTERS = {
 
@@ -1339,10 +1351,14 @@ alert("Download Failed");
 }
 
 }
+
+
+
+
 /* SEARCH RESULT */
 
-function searchResult(){
-
+async function searchResult(){
+console.log("Search Started");
 let roll =
 document.getElementById("roll").value.trim();
 
@@ -1428,78 +1444,184 @@ document.getElementById("loading")
 
 /* API URL */
 
-let url =
-API_URL +
-"?year=" + encodeURIComponent(year) +
-"&roll=" + encodeURIComponent(roll) +
-"&examType=" + encodeURIComponent(examType) +
-"&course=" + encodeURIComponent(course) +
-"&sem=" + encodeURIComponent(sem) +
-"&father=" + encodeURIComponent(father);
-/* FETCH */
+// =========================
+// SUPABASE SEARCH
+// =========================
+
+let dbExamType = examType;
+
+if (examType === "BACKPAPER") {
+    dbExamType = "BACK PAPER";
+}
+
+const { data, error: dbError } = await window.db
+.from("results")
+.select("*")
+.eq("roll", roll);
+  const record = data[0];
+
+console.log("Record =", record);
+
+console.log("Returned rows =", data);
+console.log("Error =", dbError);
+
+console.log(data);
+console.log(dbError);
+  
+  
+if (dbError) {
 
 
-const timeout = setTimeout(() => {
+  document.getElementById("loading").style.display = "none";
 
-isTimedOut = true;
+  error.innerHTML = "Database Error";
+
+  console.log(dbError);
+
+  return;
+
+}
+
+if (!record) {
+
+  document.getElementById("loading").style.display = "none";
+
+  error.innerHTML =
+  "<span style='font-size:18px;font-weight:700;'>🚫 RESULT NOT FOUND</span>";
+
+  return;
+
+}
+
+console.log("Supabase Record =", data);
+ console.log("Course =", record.course);
+console.log("Exam =", record.exam_type);
+console.log("Semester =", sem);
+console.log("Link =", record["sem"+sem]);
+  // =========================
+// Father / Mother / Course Match
+// =========================
+
+console.log(data);
+// Father Check
+
+const enteredFather = father.toLowerCase().trim();
+
+const dbFather =
+(record.father || "").toLowerCase().trim();
+
+const dbMother =
+(record.mother || "").toLowerCase().trim();
+
+if(
+!dbFather.includes(enteredFather) &&
+!dbMother.includes(enteredFather)
+){
+  
+    document.getElementById("loading").style.display = "none";
+
+    error.innerHTML = "❌ Father / Mother Name Wrong";
+
+    return;
+
+}
+ let link = "";
+
+if (
+    examType === "UG" ||
+    examType === "PG" ||
+    examType === "PROFESSIONAL"
+){
+
+    link = record["sem" + sem];
+
+}
+else{
+
+    if(year === "2025"){
+
+        // 2025 Back Paper
+        link = record["back_sem" + sem];
+
+    }
+
+   else if(year === "2026"){
+
+    // Back In Back
+    let link1 = record["back2_sem" + sem];
+
+    // Normal Back
+    let link2 = record["back_sem" + sem];
+
+    // Pehle Back In Back check
+    if(link1){
+
+        try{
+
+            const r1 = await fetch(link1,{
+                method:"HEAD"
+            });
+
+            if(r1.ok){
+
+                link = link1;
+
+            }
+
+        }catch(e){}
+
+    }
+
+    // Agar Back2 valid nahi hai
+    if(!link && link2){
+
+        try{
+
+            const r2 = await fetch(link2,{
+                method:"HEAD"
+            });
+
+            if(r2.ok){
+
+                link = link2;
+
+            }
+
+        }catch(e){}
+
+    }
+
+
+    }
+
+}
+if(!link){
+
+    document.getElementById("loading").style.display = "none";
+
+    error.innerHTML = "🚫 RESULT NOT FOUND";
+
+    return;
+
+}
+  resultLink = link;
 
 document.getElementById("loading").style.display = "none";
 
-error.innerHTML =
-"⛔ Server Timeout. Please try again.";
-
-},9000);
-
-fetch(url)
-
-.then(response => response.json())
-
-.then(data => {
-
-if(isTimedOut) return;
-
-clearTimeout(timeout);
-document.getElementById("loading")
-.style.display = "none";
-
-if(data.status === "notuploaded"){
-
-error.innerHTML =
-"<div style='text-align:center;'><span style='display:inline-block;background:#fee2e2;padding:8px 14px;border-radius:8px;border:2px solid #dc2626;color:#b91c1c;font-size:13px;font-weight:500;'>❌ RECORD NOT FOUND</span></div>";
-
-return;
-
-}
-
-if(data.status === "found"){
 let btn = document.getElementById("actionBtn");
 
 btn.innerHTML = "📄 Download Result";
+
 btn.style.display = "block";
-btn.style.background = "";
 
-btn.onclick = openFullResult;
-
-document.getElementById("studentName")
-.innerHTML =
-"👨‍🎓 " + (data.student || "Student");
-
-if(examType === "BACK PAPER" || examType === "BACKPAPER"){
-
-document.getElementById("studentSemester").innerHTML =
-"Semester : " + sem + " (BACK PAPER) " + year;
-
-}else{
-
+document.getElementById("studentName").innerHTML =
+"👨‍🎓 " + (record.student || "Student");
+  
 document.getElementById("studentSemester").innerHTML =
 "Semester : " + sem + " (" + year + ")";
 
-}
-resultLink =
-data.link || "";
-resultLink = data.link || "";
-
 document.getElementById("resultPopup").style.display = "flex";
+
 history.pushState({popup:true}, "", "");
 
 document.getElementById("pdfLoader").style.display = "flex";
@@ -1508,34 +1630,11 @@ let frame = document.getElementById("resultFrame");
 
 frame.onload = function(){
 
-document.getElementById("pdfLoader").style.display = "none";
+    document.getElementById("pdfLoader").style.display = "none";
 
 };
 
 frame.src = resultLink;
-
-}else{
-
-error.innerHTML =
-"<span style='font-size:18px;font-weight:700;'>🚫 RESULT NOT FOUND</span><br><small style='font-size:12px;font-weight:300;'>Record not available. Please enter correct details.</small>";
-}
-
-})
-
-.catch(err => {
-
-clearTimeout(timeout);
-document.getElementById("loading")
-.style.display =
-"none";
-
-error.innerHTML =
-"⚠  No Internet. Please connect Internet.";
-
-console.log(err);
-
-});
-
 }
 
 /* ESC CLOSE */
