@@ -1159,12 +1159,11 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_CX5vJzr0Tfj_1Fxt6_DF1g_vlbcO8ub";
 
-const supabase =
+const sb =
 window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-
 
 let resultLink = "";
 const YEAR_WISE_SEMESTERS = {
@@ -1359,9 +1358,9 @@ alert("Download Failed");
 /* SEARCH RESULT */
 async function testSupabase(){
 
-const { data, error } = await supabase
+const { data, error } = await sb
 .from("results")
-.select("*")
+.select("*");
 .limit(5);
 
 console.log(data);
