@@ -945,10 +945,6 @@ animation:dots .8s infinite linear;
  "url":"https://cbpgresult-com.github.io/"
 }
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
 </head>
 
 <body>
@@ -1153,18 +1149,6 @@ const SHOW_PROFESSIONAL_2026 = true
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwcuRt0wI_st92B8kKVYjYbc_K80_ZU8QAAlFQ32-NpBUwYFnYHtWRWndosFzQxUc5U/exec";
 
-const SUPABASE_URL =
-"https://tbwxeokivddxumxvyfxc.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_CX5vJzr0Tfj_1Fxt6_DF1g_vlbcO8ub";
-
-const sb =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
 let resultLink = "";
 const YEAR_WISE_SEMESTERS = {
 
@@ -1356,18 +1340,6 @@ alert("Download Failed");
 
 }
 /* SEARCH RESULT */
-async function testSupabase(){
-
-const { data, error } = await sb
-.from("results")
-.select("*");
-.limit(5);
-
-console.log(data);
-
-console.log(error);
-
-}
 
 function searchResult(){
 
@@ -1804,7 +1776,6 @@ document.addEventListener("keydown", function(e){
     }
 
 });
-testSupabase();
 </script>
 
 </body>
