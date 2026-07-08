@@ -987,7 +987,6 @@ CBPG RESULT PORTAL.
 Affiliated with Maharaja SuhelDev State University,
 Azamgarh, Uttar Pradesh.
 Check Semester Examination Results Online.
-Chauri Belha P.G College, Tarwa, Azamgarh, Uttar Pradesh
 </div>
 <div class="input-group">
 <select id="year">
@@ -1005,11 +1004,7 @@ Chauri Belha P.G College, Tarwa, Azamgarh, Uttar Pradesh
 <div class="input-group">
 <label></label>
 <select id="examType">
-<option value="">Choose Exam Type</option>
-<option value="BACKPAPER">BACK_PAPER</option>
-<option value="UG">UnderGraduate (UG)</option>
-<option value="PG">PostGraduate (PG)</option>
-<option value="PROFESSIONAL">PROFESSIONAL</option>
+    <option value="">Choose Exam Type</option>
 </select>
 </div>
 
@@ -1709,6 +1704,19 @@ document.getElementById("year")
 .addEventListener("change", function(){
 let year = this.value;
 let examType = document.getElementById("examType");
+if(year === ""){
+
+    examType.innerHTML =
+    '<option value="">Choose Exam Type</option>';
+
+    document.getElementById("course").innerHTML =
+    '<option value="">Choose Course</option>';
+
+    document.getElementById("sem").innerHTML =
+    '<option value="">Choose Semester</option>';
+
+    return;
+}
 
 if(year === "2024"){
 
