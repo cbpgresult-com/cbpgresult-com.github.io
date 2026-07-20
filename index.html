@@ -1549,7 +1549,15 @@ document.getElementById("pdfLoader").style.display = "none";
 
 };
 
-frame.src = resultLink;
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+if (isMobile) {
+    frame.src =
+        "https://docs.google.com/gview?embedded=1&url=" +
+        encodeURIComponent(resultLink);
+} else {
+    frame.src = resultLink;
+}
 
 }else{
 
