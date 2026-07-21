@@ -968,6 +968,106 @@ animation:dots .8s infinite linear;
 75%{content:"...";}
 100%{content:"";}
 }
+  
+  /* WEBSITE LIVE POPUP */
+
+.welcome-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+backdrop-filter:blur(5px);
+}
+
+.welcome-box{
+width:90%;
+max-width:390px;
+background:#fff;
+border-radius:22px;
+padding:30px;
+text-align:center;
+animation:popupShow .35s ease;
+box-shadow:0 20px 45px rgba(0,0,0,.25);
+}
+
+@keyframes popupShow{
+from{
+opacity:0;
+transform:translateY(25px) scale(.9);
+}
+to{
+opacity:1;
+transform:none;
+}
+}
+
+.welcome-icon{
+width:75px;
+height:75px;
+margin:auto;
+margin-bottom:18px;
+border-radius:50%;
+background:linear-gradient(135deg,#2563eb,#06b6d4);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:34px;
+color:#fff;
+}
+
+.welcome-box h2{
+font-size:26px;
+margin-bottom:10px;
+color:#111827;
+}
+
+.welcome-box p{
+color:#6b7280;
+font-size:15px;
+line-height:1.6;
+margin-bottom:22px;
+}
+
+.explore-btn{
+display:block;
+text-decoration:none;
+background:linear-gradient(135deg,#2563eb,#06b6d4);
+color:#fff;
+padding:15px;
+border-radius:14px;
+font-weight:700;
+margin-bottom:12px;
+transition:.3s;
+}
+
+.explore-btn:hover{
+transform:translateY(-2px);
+}
+
+.later-btn{
+width:100%;
+padding:15px;
+border:none;
+border-radius:14px;
+background:linear-gradient(135deg,#ef4444,#dc2626);
+color:#fff;
+font-weight:700;
+font-size:15px;
+cursor:pointer;
+transition:.25s;
+}
+
+.later-btn:hover{
+background:linear-gradient(135deg,#dc2626,#b91c1c);
+transform:translateY(-2px);
+}
+
+#welcomePopup{
+transition:.3s ease;
+}
 </style>
 
 <script type="application/ld+json">
@@ -980,8 +1080,32 @@ animation:dots .8s infinite linear;
 </script>
 </head>
 
-<body>
+<body><!-- Website Live Popup -->
+<div id="welcomePopup" class="welcome-overlay">
+    <div class="welcome-box">
+        <div class="welcome-icon">🚀</div>
 
+        <h2>Our New Website is LIVE!</h2>
+
+        <p>
+            Experience our brand new website with a faster,
+            smoother and modern interface.
+        </p>
+
+        <a href="https://anurixxa.blogspot.com/"
+           target="_blank"
+           class="explore-btn">
+           EXPLORE NOW →
+        </a>
+
+        <button class="later-btn" onclick="closeWelcomePopup()">
+            Maybe Later
+        </button>
+    </div>
+</div>
+
+  
+  
 <div class="loading" id="loading">
   <div class="search-loader">
 
@@ -1824,6 +1948,46 @@ document.addEventListener("keydown", function(e){
     if (e.keyCode == 123) { // F12
         e.preventDefault();
     }
+
+});
+  
+  let countdown = 5;
+let popupTimer;
+
+function closeWelcomePopup(){
+    clearInterval(popupTimer);
+
+    document.getElementById("welcomePopup").style.opacity="0";
+
+    setTimeout(()=>{
+        document.getElementById("welcomePopup").style.display="none";
+    },300);
+}
+
+window.addEventListener("load",()=>{
+
+    const popup=document.getElementById("welcomePopup");
+    const btn=document.querySelector(".later-btn");
+
+    popup.style.display="flex";
+
+    btn.innerHTML=`Maybe Later (${countdown})`;
+
+    popupTimer=setInterval(()=>{
+
+        countdown--;
+
+        if(countdown>0){
+
+            btn.innerHTML=`Maybe Later (${countdown})`;
+
+        }else{
+
+            closeWelcomePopup();
+
+        }
+
+    },1000);
 
 });
 </script>
