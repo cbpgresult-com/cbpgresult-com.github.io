@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Angel Computer - Age Calculator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#17233b;
+    background:#fff;
+    padding:20px;
+}
+
+/* =========================================
+   MAIN WRAPPER
+========================================= */
+
+.page{
+    width:100%;
+    max-width:1120px;
+    margin:auto;
+}
+
+/* =========================================
+   TOP BRAND
+========================================= */
+
+.top-brand{
+    text-align:center;
+    position:relative;
+    padding:2px 0 30px;
+}
+
+.brand-monitor{
+    width:115px;
+    height:82px;
+    margin:auto;
+    position:relative;
+}
+
+/* monitor */
+.monitor-screen{
+    width:92px;
+    height:63px;
+    position:absolute;
+    left:11px;
+    top:0;
+    border:6px solid #182538;
+    border-radius:7px;
+    background:linear-gradient(
+        135deg,
+        #56b7ff 0%,
+        #2497ed 55%,
+        #0874d6 100%
+    );
+    box-shadow:0 5px 10px rgba(0,0,0,.14);
+}
+
+/* monitor stand */
+.monitor-stand{
+    width:12px;
+    height:16px;
+    position:absolute;
+    left:51px;
+    top:63px;
+    background:#172538;
+}
+
+.monitor-base{
+    width:53px;
+    height:7px;
+    position:absolute;
+    left:30px;
+    top:76px;
+    border-radius:8px;
+    background:#172538;
+}
+
+/* small blue decorations */
+.top-brand::before,
+.top-brand::after{
+    content:"";
+    position:absolute;
+    top:49px;
+    width:43px;
+    height:4px;
+    border-radius:10px;
+    background:#1682ec;
+}
+
+.top-brand::before{
+    left:calc(50% - 300px);
+}
+
+.top-brand::after{
+    right:calc(50% - 300px);
+}
+
+.brand-name{
+    margin-top:9px;
+    font-size:52px;
+    line-height:1;
+    font-weight:900;
+    letter-spacing:-2.5px;
+}
+
+.brand-name .angel{
+    color:#1478e8;
+}
+
+.brand-name .computer{
+    color:#101b2f;
+}
+
+.brand-tagline{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:25px;
+    margin-top:17px;
+    color:#65748b;
+    font-size:12px;
+    letter-spacing:5px;
+    font-weight:700;
+}
+
+.brand-tagline::before,
+.brand-tagline::after{
+    content:"";
+    width:43px;
+    height:1px;
+    background:#aeb9c8;
+}
+
+/* top right badge */
+.top-badge{
+    position:absolute;
+    right:0;
+    top:5px;
+    padding:13px 24px;
+    border:1px solid #c9e0ff;
+    border-radius:30px;
+    background:#f2f8ff;
+    color:#0866d5;
+    font-size:14px;
+    font-weight:700;
+    box-shadow:0 5px 20px rgba(36,124,235,.08);
+}
+
+.top-badge span{
+    margin:0 5px;
+}
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.main-card{
+    position:relative;
+    background:#fff;
+    border:1px solid #e1e7ef;
+    border-radius:25px;
+    padding:40px 39px 36px;
+    box-shadow:
+        0 16px 45px rgba(22,38,63,.08),
+        0 2px 8px rgba(22,38,63,.03);
+    overflow:hidden;
+}
+
+.main-card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:4px;
+    background:linear-gradient(
+        90deg,
+        #2496f5,
+        #1679ee,
+        #428df4
+    );
+}
+
+/* =========================================
+   CALCULATOR HEADER
+========================================= */
+
+.calculator-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:38px;
+}
+
+.title-left{
+    display:flex;
+    align-items:center;
+    gap:24px;
+}
+
+.calendar-box{
+    width:91px;
+    height:91px;
+    flex-shrink:0;
+    border-radius:25px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        145deg,
+        #e6f3ff,
+        #f5faff
+    );
+    border:1px solid #d8eaff;
+    box-shadow:
+        0 10px 25px rgba(29,126,236,.08),
+        inset 0 1px 0 #fff;
+}
+
+.calendar-icon{
+    position:relative;
+    width:42px;
+    height:39px;
+    border:4px solid #1679eb;
+    border-radius:7px;
+}
+
+.calendar-icon::before{
+    content:"";
+    position:absolute;
+    left:-4px;
+    top:6px;
+    width:42px;
+    height:4px;
+    background:#1679eb;
+}
+
+.calendar-icon::after{
+    content:"••••••••";
+    position:absolute;
+    left:3px;
+    top:12px;
+    width:29px;
+    color:#1679eb;
+    letter-spacing:3px;
+    font-size:15px;
+    line-height:13px;
+}
+
+.calculator-title{
+    font-size:45px;
+    font-weight:900;
+    letter-spacing:-2px;
+    color:#101b2f;
+}
+
+.calculator-title .blue{
+    color:#1479e8;
+}
+
+.calculator-subtitle{
+    margin-top:7px;
+    font-size:19px;
+    color:#62728a;
+    font-weight:500;
+}
+
+.story-box{
+    width:174px;
+    height:83px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    border-radius:13px;
+    background:#eaf6ff;
+    color:#0866d5;
+    font-size:15px;
+    line-height:22px;
+    font-weight:700;
+    position:relative;
+}
+
+.story-box .sparkle{
+    font-size:25px;
+    display:block;
+    margin-bottom:2px;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.inputs{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:31px;
+}
+
+.field label{
+    display:block;
+    margin-bottom:10px;
+    color:#172238;
+    font-size:18px;
+    font-weight:800;
+}
+
+.input{
+    width:100%;
+    height:65px;
+    border:2px solid #cfd9e6;
+    border-radius:13px;
+    background:#fff;
+    color:#1a2940;
+    padding:0 22px;
+    font-size:19px;
+    font-weight:600;
+    outline:none;
+    transition:.2s ease;
+}
+
+.input::placeholder{
+    color:#8b98aa;
+}
+
+.input:hover{
+    border-color:#abc7e9;
+}
+
+.input:focus{
+    border-color:#1680ee;
+    box-shadow:0 0 0 4px rgba(22,128,238,.09);
+}
+
+/* remove number arrows */
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+}
+
+.input[type=number]{
+    -moz-appearance:textfield;
+}
+
+/* =========================================
+   CALCULATE BUTTON
+========================================= */
+
+.calculate-btn{
+    width:100%;
+    height:76px;
+    margin-top:20px;
+    border:none;
+    border-radius:17px;
+    cursor:pointer;
+    color:#fff;
+    font-size:24px;
+    font-weight:800;
+    background:linear-gradient(
+        100deg,
+        #2498f7,
+        #1373ed
+    );
+    box-shadow:
+        0 12px 26px rgba(20,117,237,.27),
+        inset 0 1px 0 rgba(255,255,255,.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    transition:.22s ease;
+}
+
+.calculate-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 16px 32px rgba(20,117,237,.33),
+        inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.calculate-btn:active{
+    transform:scale(.99);
+}
+
+.calc-symbol{
+    font-size:29px;
+}
+
+.arrow{
+    font-size:34px;
+    font-weight:400;
+    margin-left:auto;
+    margin-right:24px;
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.error{
+    display:none;
+    margin-top:13px;
+    padding:13px 15px;
+    border-radius:12px;
+    background:#fff1f2;
+    border:1px solid #fecdd3;
+    color:#be123c;
+    text-align:center;
+    font-size:14px;
+    font-weight:700;
+}
+
+/* =========================================
+   AGE RESULT
+========================================= */
+
+.result{
+    display:none;
+    margin-top:27px;
+    padding:29px 27px 25px;
+    border:2px solid #31b875;
+    border-radius:21px;
+    background:linear-gradient(
+        145deg,
+        #f4fff9,
+        #ffffff
+    );
+    box-shadow:
+        0 10px 30px rgba(16,185,129,.07);
+    animation:resultShow .55s ease;
+}
+
+@keyframes resultShow{
+    0%{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.result-title{
+    text-align:center;
+    color:#08743f;
+    font-size:27px;
+    font-weight:900;
+    margin-bottom:24px;
+}
+
+.result-items{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.result-item{
+    height:132px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    border:1px solid;
+}
+
+.result-item:nth-child(1){
+    background:#edf5ff;
+    border-color:#bad6ff;
+}
+
+.result-item:nth-child(2){
+    background:#fff8e9;
+    border-color:#f5d99c;
+}
+
+.result-item:nth-child(3){
+    background:#fff0f1;
+    border-color:#ffc2c9;
+}
+
+.result-item:nth-child(4){
+    background:#f7efff;
+    border-color:#ddc5ff;
+}
+
+.result-number{
+    font-size:40px;
+    line-height:1;
+    font-weight:900;
+    margin-bottom:12px;
+}
+
+.result-item:nth-child(1) .result-number{
+    color:#163fa4;
+}
+
+.result-item:nth-child(2) .result-number{
+    color:#a35100;
+}
+
+.result-item:nth-child(3) .result-number{
+    color:#c51d2c;
+}
+
+.result-item:nth-child(4) .result-number{
+    color:#5b25a5;
+}
+
+.result-label{
+    font-size:17px;
+    font-weight:800;
+}
+
+.result-bottom{
+    margin-top:21px;
+    min-height:63px;
+    border-radius:14px;
+    background:#dffff0;
+    border:1px solid #bcebd5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#087443;
+    font-size:17px;
+    font-weight:700;
+    text-align:center;
+    padding:10px 15px;
+}
+
+.heart{
+    font-size:25px;
+    margin-right:14px;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer{
+    text-align:center;
+    padding-top:25px;
+}
+
+.design{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:38px;
+    color:#687890;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:4px;
+}
+
+.design::before,
+.design::after{
+    content:"";
+    width:62px;
+    height:1px;
+    background:#c9d2de;
+}
+
+.footer-quote{
+    margin-top:14px;
+    color:#64748b;
+    font-size:14px;
+}
+
+.footer-quote span{
+    color:#f23d4d;
+}
+
+/* =========================================
+   LOADING POPUP
+========================================= */
+
+.loader-overlay{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(18,31,50,.28);
+    backdrop-filter:blur(7px);
+    -webkit-backdrop-filter:blur(7px);
+}
+
+.loader-overlay.active{
+    display:flex;
+}
+
+.loader-popup{
+    width:550px;
+    max-width:100%;
+    padding:38px 40px 30px;
+    border-radius:23px;
+    background:rgba(255,255,255,.98);
+    border:1px solid #dce5f0;
+    box-shadow:0 30px 80px rgba(15,30,55,.25);
+    text-align:center;
+    animation:popup .3s ease;
+}
+
+@keyframes popup{
+    from{
+        opacity:0;
+        transform:translateY(12px) scale(.94);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.spinner{
+    width:74px;
+    height:74px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    border:8px solid #dceaff;
+    border-top-color:#1680ef;
+    border-right-color:#1680ef;
+    animation:rotate 1s linear infinite;
+}
+
+@keyframes rotate{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.loader-title{
+    font-size:23px;
+    font-weight:900;
+    color:#142039;
+}
+
+.loader-subtitle{
+    margin-top:8px;
+    font-size:16px;
+    color:#65758c;
+}
+
+.loading-progress{
+    width:100%;
+    height:5px;
+    background:#e9eef5;
+    border-radius:20px;
+    margin-top:22px;
+    overflow:hidden;
+}
+
+.loading-progress-bar{
+    width:0;
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(
+        90deg,
+        #2497f5,
+        #1375ed,
+        #735cf3
+    );
+    animation:progress3s 3s linear forwards;
+}
+
+@keyframes progress3s{
+    from{width:0;}
+    to{width:100%;}
+}
+
+.loader-design{
+    margin-top:21px;
+    padding-top:17px;
+    border-top:1px solid #e7ebf1;
+    color:#65748a;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:4px;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media(max-width:900px){
+
+    .top-badge{
+        display:none;
+    }
+
+    .brand-name{
+        font-size:44px;
+    }
+
+    .calculator-title{
+        font-size:38px;
+    }
+
+    .calculator-subtitle{
+        font-size:16px;
+    }
+
+    .story-box{
+        display:none;
+    }
+
+    .result-items{
+        gap:12px;
+    }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:650px){
+
+    body{
+        padding:12px;
+    }
+
+    .top-brand{
+        padding-bottom:23px;
+    }
+
+    .monitor-screen{
+        width:72px;
+        height:50px;
+        border-width:5px;
+        left:21px;
+    }
+
+    .monitor-stand{
+        left:51px;
+        top:50px;
+        height:14px;
+        width:9px;
+    }
+
+    .monitor-base{
+        left:34px;
+        top:62px;
+        width:45px;
+        height:6px;
+    }
+
+    .brand-monitor{
+        width:115px;
+        height:70px;
+    }
+
+    .top-brand::before,
+    .top-brand::after{
+        display:none;
+    }
+
+    .brand-name{
+        font-size:34px;
+        letter-spacing:-1.5px;
+    }
+
+    .brand-tagline{
+        font-size:8px;
+        letter-spacing:3px;
+        gap:10px;
+        margin-top:13px;
+    }
+
+    .brand-tagline::before,
+    .brand-tagline::after{
+        width:25px;
+    }
+
+    .main-card{
+        padding:25px 16px 22px;
+        border-radius:21px;
+    }
+
+    .calculator-header{
+        margin-bottom:27px;
+    }
+
+    .title-left{
+        gap:13px;
+    }
+
+    .calendar-box{
+        width:55px;
+        height:55px;
+        border-radius:16px;
+    }
+
+    .calendar-icon{
+        transform:scale(.67);
+    }
+
+    .calculator-title{
+        font-size:27px;
+        letter-spacing:-1px;
+    }
+
+    .calculator-subtitle{
+        font-size:12px;
+        line-height:17px;
+        margin-top:4px;
+    }
+
+    .inputs{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .field label{
+        font-size:15px;
+        margin-bottom:7px;
+    }
+
+    .input{
+        height:55px;
+        font-size:16px;
+        padding:0 16px;
+        border-radius:12px;
+    }
+
+    .calculate-btn{
+        height:59px;
+        border-radius:14px;
+        font-size:17px;
+        margin-top:19px;
+        gap:9px;
+    }
+
+    .calc-symbol{
+        font-size:21px;
+    }
+
+    .arrow{
+        font-size:27px;
+        margin-right:15px;
+    }
+
+    .result{
+        margin-top:21px;
+        padding:20px 10px 17px;
+        border-radius:18px;
+    }
+
+    .result-title{
+        font-size:21px;
+        margin-bottom:17px;
+    }
+
+    .result-items{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .result-item{
+        height:103px;
+        border-radius:13px;
+    }
+
+    .result-number{
+        font-size:30px;
+        margin-bottom:8px;
+    }
+
+    .result-label{
+        font-size:12px;
+    }
+
+    .result-bottom{
+        min-height:53px;
+        margin-top:12px;
+        font-size:12px;
+        line-height:17px;
+        border-radius:12px;
+    }
+
+    .heart{
+        font-size:20px;
+        margin-right:8px;
+    }
+
+    .design{
+        font-size:11px;
+        letter-spacing:3px;
+        gap:14px;
+    }
+
+    .design::before,
+    .design::after{
+        width:38px;
+    }
+
+    .footer-quote{
+        font-size:11px;
+    }
+
+    .loader-popup{
+        width:calc(100% - 10px);
+        padding:30px 22px 25px;
+        border-radius:21px;
+    }
+
+    .spinner{
+        width:62px;
+        height:62px;
+        border-width:7px;
+        margin-bottom:18px;
+    }
+
+    .loader-title{
+        font-size:19px;
+    }
+
+    .loader-subtitle{
+        font-size:13px;
+    }
+
+    .loader-design{
+        font-size:10px;
+        letter-spacing:3px;
+    }
+}
+
+/* very small phones */
+@media(max-width:360px){
+
+    .brand-name{
+        font-size:30px;
+    }
+
+    .calculator-title{
+        font-size:24px;
+    }
+
+    .calculator-subtitle{
+        font-size:11px;
+    }
+
+    .calendar-box{
+        width:49px;
+        height:49px;
+    }
+
+    .result-number{
+        font-size:27px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =====================================
+         ANGEL COMPUTER BRAND
+    ====================================== -->
+
+    <header class="top-brand">
+
+        <div class="brand-monitor">
+            <div class="monitor-screen"></div>
+            <div class="monitor-stand"></div>
+            <div class="monitor-base"></div>
+        </div>
+
+        <div class="brand-name">
+            <span class="angel">Angel</span>
+            <span class="computer"> Computer</span>
+        </div>
+
+        <div class="brand-tagline">
+            SMART TOOLS FOR A BRIGHTER TOMORROW
+        </div>
+
+        <div class="top-badge">
+            👑
+            <span>Fast</span> •
+            <span>Free</span> •
+            <span>Accurate</span>
+        </div>
+
+    </header>
+
+
+    <!-- =====================================
+         CALCULATOR CARD
+    ====================================== -->
+
+    <main class="main-card">
+
+        <div class="calculator-header">
+
+            <div class="title-left">
+
+                <div class="calendar-box">
+                    <div class="calendar-icon"></div>
+                </div>
+
+                <div>
+                    <h1 class="calculator-title">
+                        <span class="blue">Age</span> Calculator
+                    </h1>
+
+                    <p class="calculator-subtitle">
+                        Find your exact age in years, months and days
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="story-box">
+                <div>
+                    <span class="sparkle">✦</span>
+                    Every age<br>
+                    has a story! ♡
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- INPUTS -->
+
+        <div class="inputs">
+
+            <div class="field">
+                <label for="day">Date</label>
+
+                <input
+                    class="input"
+                    id="day"
+                    type="number"
+                    min="1"
+                    max="31"
+                    placeholder="DD"
+                    inputmode="numeric"
+                >
+            </div>
+
+
+            <div class="field">
+                <label for="month">Month</label>
+
+                <input
+                    class="input"
+                    id="month"
+                    type="number"
+                    min="1"
+                    max="12"
+                    placeholder="MM"
+                    inputmode="numeric"
+                >
+            </div>
+
+
+            <div class="field">
+                <label for="year">Year</label>
+
+                <input
+                    class="input"
+                    id="year"
+                    type="number"
+                    min="1900"
+                    max="2100"
+                    placeholder="YYYY"
+                    inputmode="numeric"
+                >
+            </div>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div class="error" id="error"></div>
+
+
+        <!-- CALCULATE -->
+
+        <button
+            type="button"
+            class="calculate-btn"
+            id="calculateBtn"
+        >
+
+            <span class="calc-symbol">▣</span>
+
+            <span>Calculate Age</span>
+
+            <span class="arrow">→</span>
+
+        </button>
+
+
+        <!-- =================================
+             RESULT
+        ================================== -->
+
+        <section class="result" id="result">
+
+            <div class="result-title">
+                🎉 Your Age is
+            </div>
+
+            <div class="result-items">
+
+                <div class="result-item">
+                    <div class="result-number" id="years">0</div>
+                    <div class="result-label">Years</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-number" id="months">0</div>
+                    <div class="result-label">Months</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-number" id="days">0</div>
+                    <div class="result-label">Days</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-number" id="totalDays">0</div>
+                    <div class="result-label">Total Days</div>
+                </div>
+
+            </div>
+
+            <div class="result-bottom" id="resultBottom">
+                <span class="heart">♥</span>
+                Keep growing, keep shining!
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="footer">
+
+        <div class="design">
+            Design by Suraj
+        </div>
+
+        <div class="footer-quote">
+            “Good Tools Create a Better You”
+            <span>❤️</span>
+        </div>
+
+    </footer>
+
+</div>
+
+
+<!-- =========================================
+     3 SECOND LOADING POPUP
+========================================= -->
+
+<div class="loader-overlay" id="loaderOverlay">
+
+    <div class="loader-popup">
+
+        <div class="spinner"></div>
+
+        <div class="loader-title">
+            Calculating your age...
+        </div>
+
+        <div class="loader-subtitle">
+            Please wait a moment
+        </div>
+
+        <div class="loading-progress">
+            <div
+                class="loading-progress-bar"
+                id="progressBar"
+            ></div>
+        </div>
+
+        <div class="loader-design">
+            Design by Suraj
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const dayInput = document.getElementById("day");
+const monthInput = document.getElementById("month");
+const yearInput = document.getElementById("year");
+
+const calculateBtn = document.getElementById("calculateBtn");
+
+const result = document.getElementById("result");
+const errorBox = document.getElementById("error");
+
+const loaderOverlay = document.getElementById("loaderOverlay");
+const progressBar = document.getElementById("progressBar");
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+function showError(message){
+
+    errorBox.innerHTML = "⚠️ " + message;
+    errorBox.style.display = "block";
+
+    result.style.display = "none";
+}
+
+
+/* =========================================
+   CLEAR ERROR
+========================================= */
+
+function clearError(){
+
+    errorBox.style.display = "none";
+    errorBox.textContent = "";
+}
+
+
+/* =========================================
+   CALCULATE BUTTON
+========================================= */
+
+calculateBtn.addEventListener("click", function(){
+
+    clearError();
+
+    const day = Number(dayInput.value);
+    const month = Number(monthInput.value);
+    const year = Number(yearInput.value);
+
+
+    /* Empty fields */
+
+    if(!day || !month || !year){
+
+        showError(
+            "Please enter your Date, Month and Year."
+        );
+
+        return;
+    }
+
+
+    /* Date validation */
+
+    if(day < 1 || day > 31){
+
+        showError(
+            "Please enter a valid Date."
+        );
+
+        return;
+    }
+
+
+    /* Month validation */
+
+    if(month < 1 || month > 12){
+
+        showError(
+            "Please enter a valid Month."
+        );
+
+        return;
+    }
+
+
+    /* Year validation */
+
+    const currentYear = new Date().getFullYear();
+
+    if(year < 1900 || year > currentYear){
+
+        showError(
+            "Please enter a valid birth Year."
+        );
+
+        return;
+    }
+
+
+    /* Real calendar date */
+
+    const birthDate = new Date(
+        year,
+        month - 1,
+        day
+    );
+
+
+    if(
+        birthDate.getFullYear() !== year ||
+        birthDate.getMonth() !== month - 1 ||
+        birthDate.getDate() !== day
+    ){
+
+        showError(
+            "Please enter a valid calendar date."
+        );
+
+        return;
+    }
+
+
+    /* Future date */
+
+    const today = new Date();
+
+    if(birthDate > today){
+
+        showError(
+            "Birth date cannot be in the future."
+        );
+
+        return;
+    }
+
+
+    /* Hide old result */
+
+    result.style.display = "none";
+
+
+    /* Reset loader progress */
+
+    progressBar.style.animation = "none";
+
+    void progressBar.offsetWidth;
+
+    progressBar.style.animation =
+        "progress3s 3s linear forwards";
+
+
+    /* Show popup */
+
+    loaderOverlay.classList.add("active");
+
+
+    /* EXACT 3 SECONDS */
+
+    setTimeout(function(){
+
+        loaderOverlay.classList.remove("active");
+
+        calculateAge(
+            birthDate,
+            new Date()
+        );
+
+    },3000);
+
+});
+
+
+/* =========================================
+   AGE CALCULATION
+========================================= */
+
+function calculateAge(birthDate, today){
+
+    let years =
+        today.getFullYear() -
+        birthDate.getFullYear();
+
+    let months =
+        today.getMonth() -
+        birthDate.getMonth();
+
+    let days =
+        today.getDate() -
+        birthDate.getDate();
+
+
+    /* If days negative */
+
+    if(days < 0){
+
+        months--;
+
+        const previousMonth =
+            new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                0
+            );
+
+        days += previousMonth.getDate();
+    }
+
+
+    /* If months negative */
+
+    if(months < 0){
+
+        years--;
+        months += 12;
+    }
+
+
+    /* Total days */
+
+    const oneDay =
+        1000 * 60 * 60 * 24;
+
+    const totalDays =
+        Math.floor(
+            (today.getTime() -
+            birthDate.getTime()) / oneDay
+        );
+
+
+    /* Update UI */
+
+    document.getElementById("years")
+        .textContent = years;
+
+    document.getElementById("months")
+        .textContent = months;
+
+    document.getElementById("days")
+        .textContent = days;
+
+    document.getElementById("totalDays")
+        .textContent =
+        totalDays.toLocaleString("en-IN");
+
+
+    document.getElementById("resultBottom")
+        .innerHTML =
+        `<span class="heart">♥</span>
+        You are ${years} years, ${months} months and ${days} days old.`;
+
+
+    /* Show result */
+
+    result.style.display = "block";
+
+
+    /* Mobile friendly scroll */
+
+    setTimeout(function(){
+
+        if(window.innerWidth <= 650){
+
+            result.scrollIntoView({
+                behavior:"smooth",
+                block:"nearest"
+            });
+
+        }
+
+    },150);
+
+}
+
+
+/* =========================================
+   ENTER KEY
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            calculateBtn.click();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   INPUT LIMITS
+========================================= */
+
+dayInput.addEventListener(
+    "input",
+    function(){
+
+        if(this.value.length > 2){
+
+            this.value =
+                this.value.slice(0,2);
+
+        }
+
+        if(Number(this.value) > 31){
+
+            this.value = 31;
+
+        }
+
+    }
+);
+
+
+monthInput.addEventListener(
+    "input",
+    function(){
+
+        if(this.value.length > 2){
+
+            this.value =
+                this.value.slice(0,2);
+
+        }
+
+        if(Number(this.value) > 12){
+
+            this.value = 12;
+
+        }
+
+    }
+);
+
+
+yearInput.addEventListener(
+    "input",
+    function(){
+
+        if(this.value.length > 4){
+
+            this.value =
+                this.value.slice(0,4);
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
